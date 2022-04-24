@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+<body>
+  <!-- Particles-Js -->
+  <div id="particles-js" class="particlesClass "></div>
+
+  <!-- Nav-Bar -->
+    <nav class="navbar navbar-dark bg-dark" aria-label="First navbar example">
+        <div class="container-fluid">
+          <a class="navbar-brand nav-logo fs-2" href="/">BookRecommender</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <div class="collapse navbar-collapse" id="navbarsExample01">
+            <ul class="navbar-nav me-auto mb-2">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                <ul class="dropdown-menu text-center" aria-labelledby="dropdown01">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form>
+              <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </form>
+          </div>
+        </div>
+      </nav>
+      
+        <!-- Form-Header -->
+           <div class="container">     
+            <h2 class="main-heading text-center predict_header">Get your Books now!!</h2>
+
+            <br>
+
+            <div class="form-check-inline position-absolute start-50 translate-middle">
+              <label class="form-check-label" for="chkTitle">
+              <input class="form-check-input" type="radio" name="chk" id="checkTitle" >
+                Title
+              </label>
+
+              <label class="form-check-label " for="chkISBN">
+              <input class="form-check-input" type="radio" name="chk" id="checkISBN">
+                ISBN
+              </label>
+            </div>
+
+            <!-- Post-Form Section -->
+            <form class="row g-3 post_form " id="myBooks" action="predict" method="POST">
+              <div class="col-9 position-absolute start-50 translate-middle-x inputs">
+                
+                <label class="form-label">Search for Book Title: </label>
+                <!-- <div id="input" class="input-group input-group-lg"> -->
+                  
+                  <input class="form-control position-relative text-center" type="text" name="bookSearchTitle" id="searchTitle" placeholder="Search Books by NAME | Ex: Harry Potter" disabled>
+                
+                  <!-- <button class="input-group-text bi bi-search btn btn-outline-dark inputGroup-sizing-lg" type="submit"></button> -->
+                <!-- </div> -->
+                <br>
+                
+                <label class="form-label">Search for ISBN: </label>
+                <!-- <div id="input" class="input-group input-group-lg"> -->
+                  
+                  <input class="form-control position-relative text-center " type="number" name="bookSearchISBN" id="searchISBN" placeholder="Search Books by ISBN | Ex: 0123456789" autocomplete="off" disabled>
+                  <br>
+
+                <button id="search" type="submit" class="position-relative btn btn-outline-warning top-50 start-50">Search</button>
+              </div>
+
+            </form>
+
+            <br><br><br><br><br><br>
+            <!-- <div id="book-list"> -->
+              <h2 class="text-center start-50" style="margin-top: 6rem">Searched Results:</h2>
+              <!-- <div id="list-output">
+                <div class="row">
+
+                </div>
+              </div> -->
+            <!-- </div> -->
+            
+
+          <!-- <div class="card" style="width: 18rem;">
+            <img src={{ thumbnail }} class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ title }}</h5>
+              <p class="card-text">{{ info }}</p>
+              <p class="card-text">{{ author }}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div> -->
+
+
+
+          <div class="row justify-content-around" style="margin-top: 3rem">            
+            
+              <div class="card" style="width: 18rem; margin-bottom: 1rem;">
+                <img src="#" class="card-img-top rounded" alt="..." style="margin-top: 0.5rem;">
+                <div class="card-body"> 
+                  <h5 class="card-title">{{t}}</h5>
+                  <p class="badge rounded-pill bg-info col-6">By: <cite title="Source Title" class="text-dark">author</cite></p>
+                  <p class="card-text">kefbaweiawivw vawvb uawbvaw vukawvbawbev weibvwlaieubvw wl</p>
+
+                  <p class="badge rounded-pill bg-warning shadow rounded col-6">ISBN: 
+                    <cite title="Source Title">isbn</cite></p>
+                  <p class="card-text"><small class="text-muted"><i>Published on:</i>pub</small></p>
+                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+              </div>
+              
+          </div>
+
+          
+
+        </div>
+          
+      
+      <script src="{{ url_for('static', filename='js/particles.js')}}"></script>
+      <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+
+      <!-- <script src="{{ url_for('static', filename='js/booksAPI.js')}}"></script> -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+      <script>
+        var titleChk = document.getElementById("checkTitle");
+        var isbnInp = document.getElementById("searchISBN");
+        var isbnChk = document.getElementById("checkISBN");
+        var titleInp = document.getElementById("searchTitle");
+
+        titleChk.addEventListener("change", function(event) {
+          if(event.target.checked){
+            titleInp.disabled = false;
+          }
+          else {
+            isbnInp.disabled = true;
+          }
+        }, false);
+
+        isbnChk.addEventListener("change", function(event) {
+          if(event.target.checked){
+            isbnInp.disabled = false;
+          }
+          else{
+            titleInp.disabled = true;
+          }
+        }, false);
+      </script>
+      
+{% endblock %}
